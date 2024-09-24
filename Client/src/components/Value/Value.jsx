@@ -1,85 +1,63 @@
-import React, { useState } from "react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-  AccordionItemState,
-} from "react-accessible-accordion";
-import "react-accessible-accordion/dist/fancy-example.css";
-import {
-  MdOutlineArrowDropDown,
-  MdOutlineArrowDropDownCircle,
-} from "react-icons/md";
-import data from "../../utils/accordion.jsx";
-import "./Value.css";
-// Demo styles, see 'Styles' section below for some notes on use.
+import React from 'react'
+import {Accordion , AccordionItem , AccordionItemHeading , AccordionItemButton , AccordionItemPanel , AccordionItemState}
+from 'react-accessible-accordion'
+import 'react-accessible-accordion/dist/fancy-example.css'
+import './Value.css'
+import data from '../../utils/Accordion'
+import img1 from'../../../public/images/valueImage.png'
 
-const Value = () => {
+export default function Value() {
   return (
-    <section id="value" className="v-wrapper">
-      <div className="paddings innerWidth flexCenter v-container">
-        {/* left side */}
-        <div className="v-left">
-          <div className="image-container">
-            <img src="./value.png" alt="" />
-          </div>
+    <section style={{background:"rgb(217, 215, 215)"}}>
+        <div className="container ">
+            <div className="row">
+            <h1 className='text-center' style={{color:"#1f3e72" , marginTop:"80px"}}>Why Choose Us</h1>
+            <p style={{color:"gray" , textAlign:'center'}}>We provide full service at every step</p>
+
+
+                <div className="col-md-6 my-4">
+
+                    <Accordion allowMultipleExpanded={false} preExpanded={[0]}
+                    className='accordion'
+                    >
+                        {
+                            data.map((item , index) =>{
+                                return(
+                                    <AccordionItem className='accordionItem'  key={index} uuid={index}>
+                                        <AccordionItemHeading>
+                                            <AccordionItemButton >
+                                              
+                                                <span style={{marginLeft:"20px" , color:"#1f3e72"}}>{item.heading}</span>
+                                                <div className="icon">
+                                                    {/* <MdOutlineArrowDropDown size={20}/> */}
+                                                </div>
+                                                
+                                            </AccordionItemButton>
+                                        </AccordionItemHeading>
+                                        <AccordionItemPanel>
+                                            <p style={{color:"gray"}}>
+                                                {item.detail}
+                                            </p>
+                                        </AccordionItemPanel>
+                                    </AccordionItem>
+                                )
+                            })
+
+
+                    }
+
+                    </Accordion>
+ 
+                </div>
+
+                <div className="col-md-6 my-4">
+                    <img src={img1} alt='house' className='imageV'/>
+                  
+                </div>
+
+            </div>
         </div>
-
-        {/* right */}
-        <div className="flexColStart v-right">
-          <span className="orangeText">Our Value</span>
-
-          <span className="primaryText">Value We Give to You</span>
-
-          <span className="secondaryText">
-            We always ready to help by providijng the best services for you.
-            <br />
-            We beleive a good blace to live can make your life better
-          </span>
-
-          <Accordion
-            className="accordion"
-            allowMultipleExpanded={false}
-            preExpanded={[0]}
-          >
-            {data.map((item, i) => {
-              const [className, setClassName] = useState(null);
-              return (
-                <AccordionItem className={`accordionItem ${className}`} uuid={i} key={i}>
-                  <AccordionItemHeading>
-                    <AccordionItemButton className="flexCenter accordionButton ">
-                        {/* just for getting state of item */}
-                      <AccordionItemState>
-                        {({ expanded }) =>
-                          expanded
-                            ? setClassName("expanded")
-                            : setClassName("collapsed")
-                        }
-                      </AccordionItemState>
-                      <div className="flexCenter icon">{item.icon}</div>
-                      <span
-                        className="primaryText"
-                      >
-                        {item.heading}
-                      </span>
-                      <div className="flexCenter icon">
-                        <MdOutlineArrowDropDown size={20} />
-                      </div>
-                    </AccordionItemButton>
-                  </AccordionItemHeading>
-                  <AccordionItemPanel>
-                    <p className="secondaryText">{item.detail}</p>
-                  </AccordionItemPanel>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
-        </div>
-      </div>
+      
     </section>
-  );
-};
-
-export default Value;
+  )
+}

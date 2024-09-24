@@ -1,38 +1,30 @@
 [
-  {
-    "name": "Aliva Priva Jardin",
-    "price": "47,043",
-    "detail": "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
-    "image": "./r1.png"
-  },
-  {
-    "name": "Asatti Garden City",
-    "price": "66,353",
-    "detail": "Pahlawan Street XVII No.215, Cinangka, Sawangan, Depok, Jawa Barat",
-    "image": "./r2.png"
-  },
-  {
-    "name": "Citralan Puri Serang",
-    "price": "35,853",
-    "detail": "Ruko Puri Indah Residence Block A7, Lingkar Street, Ciracas, Serang, Banten",
-    "image": "./r3.png"
-  },
-  {
-    "name": "Aliva Priva Jardin",
-    "price": "47,043",
-    "detail": "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
-    "image": "./r1.png"
-  },
-  {
-    "name": "Asatti Garden City",
-    "price": "66,353",
-    "detail": "Pahlawan Street XVII No.215, Cinangka, Sawangan, Depok, Jawa Barat",
-    "image": "./r2.png"
-  },
-  {
-    "name": "Citralan Puri Serang",
-    "price": "35,853",
-    "detail": "Ruko Puri Indah Residence Block A7, Lingkar Street, Ciracas, Serang, Banten",
-    "image": "./r3.png"
-  }
-]
+    {
+      "name": "Green Valley Apartments",
+      "price": " 120,000",
+      "detail": "45 Green Street, Los Angeles, CA, USA. Luxurious apartments with a scenic view and modern amenities.",
+      "image": "../../public/images/images (2).jpeg"
+    },
+    {
+      "name": "Ocean Breeze Villas",
+      "price": "250,000",
+      "detail": "128 Ocean Drive, Miami, FL, USA. Exclusive beachfront villas with private pools and direct beach access.",
+      "image": "../../public/images/images (3).jpeg"
+    },
+    {
+      "name": "Urban Heights Condo",
+      "price": "90,000",
+      "detail": "302 Urban Way, New York, NY, USA. Stylish condos in the heart of the city with rooftop gardens and fitness center.",
+      "image": "../../public/images/images (4).jpeg"
+    },
+    {
+      "name": "Sunny Meadows Townhouses",
+      "price": "180,000",
+      "detail": "76 Sunny Lane, San Diego, CA, USA. Family-friendly townhouses with community parks and playgrounds.",
+      "image": "../../public/images/images (5).jpeg"
+    }
+    
+   
+  ]
+
+  

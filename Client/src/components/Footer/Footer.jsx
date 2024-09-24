@@ -1,31 +1,37 @@
-import React from "react";
-import "./Footer.css";
-const Footer = () => {
-  return (
-    <div className="f-wrapper">
-      <div className="paddings innerWidth flexCenter f-container">
-        {/* left side */}
-        <div className="flexColStart f-left">
-          <img src="./logo2.png" alt="" width={120} />
-          <span className="secondaryText">
-            Our vision is to make all people <br />
-            the best place to live for them.
-          </span>
-        </div>
+import React from 'react'
+import { FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
+import { SiGmail } from "react-icons/si";
+import '../Footer/Footer.css'
 
-        <div className="flexColStart f-right">
-          <span className="primaryText">Information</span>
-          <span className="secondaryText">145 New York, FL 5467, USA</span>
-          <div className="flexCenter f-menu">
-            <span>Property</span>
-            <span>Services</span>
-            <span>Product</span>
-            <span>About Us</span>
+export default function Footer() {
+  return (<>
+    <div style={{backgroundColor:"rgb(29, 38, 54)" , color:"white" , borderRadius:"15px" , marginBottom:"-30px"}}>
+    <div className="container " >
+      <div className="row ">
+          <div className="text-center my-5">
+              <h3>Do You Need Help With Anything?</h3>
+              <p>Receive updates, hot deals, tutorials, discounts sent straignt in your inbox every month</p>
+             
+ 
           </div>
-        </div>
       </div>
-    </div>
-  );
-};
+  </div>
+  </div>
+    <div className='icons text-center '>
+     <a href="https://www.facebook.com" >
+        <FaFacebook size={30} />
+      </a>
+      <a href="https://www.twitter.com">
+        <FaTwitter size={30} />
+      </a>
+      <a href="mailto:your-email@gmail.com">
+        <SiGmail size={30} />
+      </a>
+      <a href="https://www.linkedin.com" >
+        <FaLinkedin size={30} />
+      </a>
 
-export default Footer;
+    </div>
+    </>
+  )
+}
