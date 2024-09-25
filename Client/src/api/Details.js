@@ -21,6 +21,7 @@ export const deleteResidence = async (id) => {
       console.log(`Error Deleting residency: ${error}`);
     }
   };
+<<<<<<< HEAD
   export const updateRecidency = async (id, residencyData) => {
     try {
       const response = await axios.put(`${API_URL}/residency/${id}`, residencyData);
@@ -30,3 +31,61 @@ export const deleteResidence = async (id) => {
     }
   };
   
+=======
+
+export const bookVisit = async (email, residencyId, date) => {
+  try {
+    const response = await axios.post(`${API_URL}/user/bookVisit/${residencyId}`, {
+      email,
+      date
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data.message || 'Failed to book visit';
+  }
+};
+
+
+export const getAllBookings = async (email) => {
+  try {
+    const response = await axios.post(`${API_URL}/user/allBookings`, { email });
+    return response.data;
+  } catch (error) {
+    throw error.response.data.message || 'Failed to retrieve bookings';
+  }
+};
+
+
+export const cancelBooking = async (email, residencyId) => {
+  try {
+    const response = await axios.delete(`${API_URL}/user/removeBooking/${residencyId}`, {
+      data: { email }
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data.message || 'Failed to cancel booking';
+  }
+};
+
+
+export const toggleFavorite = async (residencyId) => {
+  const defaultUserId = "66f32460faedd846d654a99e"; 
+
+  try {
+    const response = await axios.post(`${API_URL}/user/toFav/${residencyId}`, { email: "marwaharonnn@gmail.com" });
+    return response.data;
+  } catch (error) {
+    throw error.response.data.message || 'Failed to update favorites';
+  }
+};
+
+
+export const getAllFavorites = async (email) => {
+  try {
+    const response = await axios.post(`${API_URL}/user/allFav`, { email });
+    return response.data;
+  } catch (error) {
+    throw error.response.data.message || 'Failed to retrieve favorites';
+  }
+};
+>>>>>>> 76dff8d9de8028e92dc2edac7c3a7af60be5a17f

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { updateRecidency } from "../api/Details";
 import swal from "sweetalert2";
 
-function Update({ property, onClose, fetchProperties }) {
+function Update({ property, onClose, fetchProperties }){
   const [formData, setFormData] = useState(property);
 
   const handleChange = (e) => {
