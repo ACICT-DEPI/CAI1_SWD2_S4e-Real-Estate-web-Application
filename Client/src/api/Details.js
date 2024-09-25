@@ -21,3 +21,12 @@ export const deleteResidence = async (id) => {
       console.log(`Error Deleting residency: ${error}`);
     }
   };
+  export const updateRecidency = async (id, residencyData) => {
+    try {
+      const response = await axios.put(`${API_URL}/residency/${id}`, residencyData);
+      return response.data;
+    } catch (error) {
+      console.log(`Error Updating Residency: ${error}`);
+    }
+  };
+  

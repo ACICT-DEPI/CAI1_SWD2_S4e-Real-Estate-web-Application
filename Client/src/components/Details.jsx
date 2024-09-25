@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getDetails, deleteResidence } from "../api/Details";
+import { getDetails, deleteResidence  } from "../api/Details";
 import { useLocation } from "react-router-dom";
 import swal from "sweetalert2";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShower, faBed, faCar, faLocationPinLock } from '@fortawesome/free-solid-svg-icons';
 import Map from "./Map";
+import Update from "./Update";
 
 function Details() {
   const {pathname}=useLocation();
@@ -12,6 +13,7 @@ function Details() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedrecidency, setSelectedrecidency] = useState(null);
 
   const fetchProperties = async () => {
     setLoading(true);
@@ -43,6 +45,15 @@ function Details() {
       }
     }
   };
+  const handleUpdate = (property) => {
+    const userEmail ="julianageorgeeshak@gmail.com"; 
+  
+    if (userEmail === property.userEmail) {
+      setSelectedrecidency(property);
+    } else {
+      swal.fire("Error", "You are not authorized to update this residency", "error");
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -51,13 +62,18 @@ function Details() {
   if (error) {
     console.error('Error fetching properties:', error);
     swal.fire("Error", "Failed fetching properties", "error");
-    return null; // or <div>Error occurred</div>
+    return null; 
   }
 
   return (
+    <div className="flex flex-col xl:flex-row">
     <div className="container mx-auto p-8 flex justify-center items-start gap-5 w-full">
       {properties.map(property => (
+        
         <div key={property._id} className="property-card">
+          <div className="mb-5">
+            Details
+          </div>
           <div>
             <img src={property?.image} alt={property?.title} className="h-[32rem] w-full rounded-xl object-cover"/>
             <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
@@ -83,6 +99,7 @@ function Details() {
                   <button className="rounded-lg border bg-blue-950 p-2 text-white font-bold w-full mt-7 transition duration-300 ease-in-out transform hover:scale-105">
                     Book your Visit
                   </button>
+                  <button onClick={() => handleUpdate(property)} className="rounded-lg border bg-red-900 p-2 text-white font-bold mt-4">Update</button>
                   <button onClick={() => handleDelete(property._id)} className="rounded-lg border bg-red-900 p-2 text-white font-bold">Delete</button>
                 </div>
               </div>
@@ -94,7 +111,10 @@ function Details() {
             </div>
           </div>
         </div>
-      ))}
+      ))}</div>
+       {selectedrecidency && (
+      <Update property={selectedrecidency} onClose={() => setSelectedrecidency(null)} fetchProperties={fetchProperties} />
+    )}
     </div>
   );
 }
