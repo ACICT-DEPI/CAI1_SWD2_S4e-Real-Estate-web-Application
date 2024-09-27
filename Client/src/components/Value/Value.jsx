@@ -3,8 +3,8 @@ import {Accordion , AccordionItem , AccordionItemHeading , AccordionItemButton ,
 from 'react-accessible-accordion'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import './Value.css'
-import data from '../../utils/Accordion'
-import img1 from'../../../public/images/valueImage.png'
+import data from '../../utils/accordion'
+import img1 from'/images/images (14).jpeg'
 
 export default function Value() {
   return (
@@ -29,7 +29,6 @@ export default function Value() {
                                               
                                                 <span style={{marginLeft:"20px" , color:"#1f3e72"}}>{item.heading}</span>
                                                 <div className="icon">
-                                                    {/* <MdOutlineArrowDropDown size={20}/> */}
                                                 </div>
                                                 
                                             </AccordionItemButton>
