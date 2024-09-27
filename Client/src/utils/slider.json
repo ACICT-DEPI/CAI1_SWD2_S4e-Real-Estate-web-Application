@@ -1,92 +1,63 @@
 [
-{"_id":"66f49a30a7777676f9655e8d",
-  "title": "Green Valley Apartments",
-  "price": 120000,
-  "address": "45 Green Street",
-  "description": "Massive opportunity to build your dream home at the base of Mummy Moun…",
-  "city": " Los Angeles",
-  "country": "USA",
-  "facilities": {
-    "bathrooms": "2",
-    "parking": "1",
-    "bedrooms": "5"
-  },
-  "image": "../../public/images/images (2).jpeg",
-  "userEmail": "julianageorgeeshak@gmail.com",
-  "createdAt": {
-    "$date": "2024-09-24T22:30:10.159Z"
-  },
-  "updatedAt": {
-    "$date": "2024-09-24T22:30:10.159Z"
-  }
-},
-     
-      { "_id":"66f49aa4a7777676f9655e92",
-        "title": "Ocean Breeze Villas Miami",
-        "price": 250000,
-        "address": "128 Ocean Drive",
-        "description": "Exclusive beachfront villas with private pools and direct beach access.",
-        "city": " Miami",
-        "country": " USA",
-        "facilities": {
-          "bathrooms": "2",
-          "parking": "3",
-          "bedrooms": "4"
-        },
-        "image": "../../public/images/images (3).jpeg",
-        "userEmail": "Ghadaahmed@gmail.com",
-        "createdAt": {
-          "$date": "2024-09-24T22:54:37.447Z"
-        },
-        "updatedAt": {
-          "$date": "2024-09-24T22:54:37.447Z"
-        }
+  { "_id":"66f7275a1d334bbc8df4eea9",
+    "title": "Mountain View Cabin",
+    "price": 150000,
+    "address": "12 Hilltop Road",
+    "description": "Cozy cabin nestled in the mountains with stunning views and hiking trails nearby.",
+    "city": "Denver",
+    "country": "USA",
+    "facilities": {
+      "bathrooms": "1",
+      "parking": "2",
+      "bedrooms": "3"
     },
-   
-    { 
-      "_id":"66f49b07a7777676f9655e97",
-      "title": "Urban Heights Condo",
-      "price": 90000,
-      "address": "302 Urban Way",
-      "description": "Stylish condos in the heart of the city with rooftop gardens and fitness center.",
-      "city": " New York",
-      "country": " USA",
-      "facilities": {
-        "bathrooms": "2",
-        "parking": "3",
-        "bedrooms": "4"
-      },
-      "image": "../../public/images/images (4).jpeg",
-      "userEmail": "Ghadaahmed@gmail.com",
-      "createdAt": {
-        "$date": "2024-09-24T23:04:38.673Z"
-      },
-      "updatedAt": {
-        "$date": "2024-09-24T23:04:38.673Z"
-      }}
-      ,
-      { "_id":"66f4956e3f530be1c25829ec",
-        "title": "Sunny Meadows Townhouses",
-        "price": 180000,
-        "address": "76 Sunny Lane",
-        "description": " Family-friendly townhouses with community parks and playgrounds.",
-        "city": "San Diego",
-        "country": "USA",
-        "facilities": {
-          "bathrooms": "3",
-          "parking": "2",
-          "bedrooms": "5"
-        },
-        "image": "../../public/images/images (5).jpeg",
-        "userEmail": "julianageorgeeshak@gmail.com",
-        "createdAt": {
-          "$date": "2024-09-24T23:12:47.398Z"
-        },
-        "updatedAt": {
-          "$date": "2024-09-24T23:12:47.398Z"
-        }}
-    
-   
-  ]
-
+    "image": "/images/mountain-view-cabins (1).jpg",
+    "userEmail": "johnsmith@gmail.com"
+  },
   
+  {"_id":"66f4a27cbed77fceb432e0e2",
+    "title": "Lakeside Cottage",
+    "price": 95000,
+    "address": "34 Lakefront Drive",
+    "description": "Charming lakeside cottage with dock access and a private garden.",
+    "city": "Orlando",
+    "country": "USA",
+    "facilities": {
+      "bathrooms": "2",
+      "parking": "1",
+      "bedrooms": "3"
+    },
+    "image": "/images/images (8).jpeg",
+    "userEmail": "janedoe@gmail.com"
+  },
+  { "_id":"66f49aa4a7777676f9655e92",
+    "title": "Ocean Breeze Villas Miami",
+    "price": 250000,
+    "address": "128 Ocean Drive",
+    "description": "Exclusive beachfront villas with private pools and direct beach access.",
+    "city": "Miami",
+    "country": "USA",
+    "facilities": {
+      "bathrooms": "2",
+      "parking": "3",
+      "bedrooms": "4"
+    },
+    "image": "/images/images (9).jpeg",
+    "userEmail": "Ghadaahmed@gmail.com"
+  },
+  
+  { "_id":"66f4a3a1e3b4477878d61af2",
+    "title": "Suburban Dream House",
+    "price": 200000,
+    "address": "58 Maple Avenue",
+    "description": "Spacious family home in a quiet suburb with a large backyard and garage.",
+    "city": "Phoenix",
+    "country": "USA",
+    "facilities": {
+      "bathrooms": "3",
+      "parking": "2",
+      "bedrooms": "5"
+    },
+    "image": "/images/images (10).jpeg",
+    "userEmail": "emilybrown@gmail.com"
+  }]
