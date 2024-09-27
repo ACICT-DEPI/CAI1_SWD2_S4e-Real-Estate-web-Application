@@ -1,6 +1,33 @@
-.icons a{
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+  }
+  
+
+  footer {
+    background-color: rgb(29, 38, 54);
+    color: white;
+    border-radius: 15px;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: auto; 
+  }
+  
+ .icons a{
     text-decoration: none;
     color: white;
     margin: 10px;
     
 }
+  
+  .icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+   
+  }
+  
+ 
+  
+  

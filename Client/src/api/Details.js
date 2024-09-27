@@ -21,7 +21,7 @@ export const deleteResidence = async (id) => {
       console.log(`Error Deleting residency: ${error}`);
     }
   };
-<<<<<<< HEAD
+
   export const updateRecidency = async (id, residencyData) => {
     try {
       const response = await axios.put(`${API_URL}/residency/${id}`, residencyData);
@@ -31,7 +31,7 @@ export const deleteResidence = async (id) => {
     }
   };
   
-=======
+
 
 export const bookVisit = async (email, residencyId, date) => {
   try {
@@ -88,4 +88,3 @@ export const getAllFavorites = async (email) => {
     throw error.response.data.message || 'Failed to retrieve favorites';
   }
 };
->>>>>>> 76dff8d9de8028e92dc2edac7c3a7af60be5a17f

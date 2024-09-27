@@ -1,7 +1,6 @@
 import React from 'react'
-import image1 from '../../../public/images/house-1867187_640.jpg'
+import image1 from '/images/house-1867187_640.jpg'
 import './Home.css';
-import SearchBar from '../SearchBar/SearchBar';
 
 
 export default function Home() {

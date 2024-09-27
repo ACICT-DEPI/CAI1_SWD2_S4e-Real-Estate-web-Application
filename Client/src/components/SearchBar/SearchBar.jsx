@@ -1,35 +1,35 @@
-// import React from 'react'
+import React, { useState } from 'react';
+import './SearchBar.css';
 
-// export default function SearchBar() {
-//   return (
-//     <div>
-//       <div className="search-bar ">
-//                     <input type='text' />
-//                     <button className='btn' style={{ backgroundColor:"rgb(48, 48, 244)" ,color:"white"}}>
-//                         Search
-//                     </button>
-//                 </div>
-//     </div>
-//   )
-// }
-import React from "react";
-import { HiLocationMarker } from "react-icons/hi";
+export default function SearchBar({ onSearch }) {
+  const [searchQuery, setSearchQuery] = useState('');
 
-const SearchBar = ({ filter, setFilter }) => {
+  const handleInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    onSearch(query.trim());  
+  };
+
+  const handleSearchClick = () => {
+    onSearch(searchQuery.trim()); 
+  };
+
   return (
-    <div className=" search-bar col-md-6 ">
-      <HiLocationMarker color="var(--blue)" size={25} />
+    <div className="search-bar">
       <input
-        placeholder="Search ..."
         type="text"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
+        placeholder="Search by title, price, location..."
+        value={searchQuery}
+        onChange={handleInputChange}
+        onKeyUp={handleInputChange} 
       />
-      <button className='btn' style={{ backgroundColor:"rgb(48, 48, 244)" ,color:"white" , marginLeft:"20px"}}>
-                         Search
-                    </button>
+      <button
+        className="btn buttn"
+        style={{ backgroundColor: "rgb(48, 48, 244)", color: "white", marginLeft: "30px" }}
+        onClick={handleSearchClick}
+      >
+        Search
+      </button>
     </div>
   );
-};
-
-export default SearchBar;
+}
