@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { getAllBookings, cancelBooking } from "../../../api/Details";
 import { useNavigate } from "react-router-dom";
-import "./Booking.css";
 
 function Bookings() {
 	const [bookings, setBookings] = useState([]);
@@ -29,59 +28,68 @@ function Bookings() {
 		try {
 			await cancelBooking("marwaharonnn@gmail.com", bookingId);
 			setBookings((prevBookings) =>
-				prevBookings.filter((booking) => booking._id !== bookingId)
+				prevBookings.filter((booking) => booking.id !== bookingId)
 			);
 			toast.success("Booking canceled successfully!");
 		} catch (error) {
-			console.error("Error canceling booking:", err);
+			console.error("Error canceling booking:", error);
 			toast.error("Failed to cancel booking");
 		}
 	};
 
-	const handleCardClick = (bookingId) => {
-		navigate(`/properties/${bookingId}`);
+	const handleCardClick = (id) => {
+		navigate(`/properties/${id}`);
 	};
 
 	useEffect(() => {
 		fetchBookings();
 	}, []);
 
-	if (loading) return <div>Loading...</div>;
-	if (error) return <div>Error fetching bookings: {error.message}</div>;
+	if (loading) return <div className="text-center">Loading...</div>;
+	if (error)
+		return (
+			<div className="text-red-600 text-center">
+				Error fetching bookings: {error.message}
+			</div>
+		);
 
 	return (
 		<div className="container mx-auto p-8">
+			<h2 className="text-2xl font-bold mb-6 text-center">Your Bookings</h2>
 			{bookings.length === 0 ? (
-				<p className="text-center">No bookings available.</p>
+				<p className="text-center text-gray-500">No bookings available.</p>
 			) : (
-				bookings.map((booking) => (
-					<div
-						key={booking.id}
-						className="property-card border p-4 rounded-lg shadow-lg flex cursor-pointer"
-						onClick={() => handleCardClick(booking.id)}
-					>
-						<img
-							src={booking.image}
-							alt={booking.title}
-							className="w-1/3 h-24 object-cover rounded-lg"
-						/>{" "}
-						<div className="ml-4 flex-1">
-							<h3 className="text-lg font-bold">{booking.title}</h3>
-							<p className="text-gray-700">Price: ${booking.price}</p>
-							<p className="text-gray-500">
-								Booking Date: {new Date(booking.date).toLocaleDateString()}
-							</p>
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+					{bookings.map((booking) => (
+						<div
+							key={booking._id}
+							className="property-card border border-gray-300 p-4 rounded-lg shadow-lg flex flex-col transition-transform transform hover:scale-105 cursor-pointer"
+							onClick={() => handleCardClick(booking.id)}
+						>
+							<img
+								src={booking.image}
+								alt={booking.title}
+								className="w-full h-48 object-cover rounded-lg mb-4"
+							/>
+							<div className="flex-1">
+								<h3 className="text-lg font-bold">{booking.title}</h3>
+								<p className="text-gray-700">Price: ${booking.price}</p>
+								<p className="text-gray-500">
+									Booking Date: {new Date(booking.date).toLocaleDateString()}
+								</p>
+							</div>
 							<button
-								onClick={() => {
+								onClick={(e) => {
+									e.stopPropagation();
 									handleCancelBooking(booking.id);
 								}}
-								className="rounded-lg border bg-red-900 p-2 text-white font-bold mt-4"
+								className="mt-4 rounded-lg bg-red-600 p-2 text-white font-bold transition-colors hover:bg-red-700"
 							>
 								Cancel Booking
 							</button>
 						</div>
-					</div>
-				))
+					))}
+				</div>
 			)}
 			<ToastContainer />
 		</div>
