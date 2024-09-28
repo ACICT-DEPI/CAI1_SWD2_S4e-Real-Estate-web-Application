@@ -5,7 +5,7 @@ import { getAllProperties } from "../../../api/Properties";
 import Heart from "../../Heart/Heart";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./Properties.css";
+
 
 export default function Properties() {
   const [data, setData] = useState([]);
@@ -17,8 +17,8 @@ export default function Properties() {
   const fetchProperties = async () => {
     try {
       const response = await getAllProperties();
-      setData(response);
-      setFilteredData(response);
+      setData(response.map(property => ({ ...property, isFavourite: false }))); 
+      setFilteredData(response.map(property => ({ ...property, isFavourite: false }))); 
       console.log(response);
     } catch (error) {
       console.error('Error fetching properties:', error);
@@ -79,7 +79,7 @@ export default function Properties() {
 
   return (
     <div className="container">
-      <div className="search-container p-3">
+      <div className="properties-container p-5 m-5">
         <SearchBar onSearch={handleSearch} />
       </div>
 
@@ -88,15 +88,15 @@ export default function Properties() {
           {filteredData && filteredData.length > 0 ? (
             filteredData.map((card, index) => (
               <div className="col-md-3 mb-4 d-flex align-items-stretch" key={index}>
-                <Link to={`/properties/${card._id}`} className="card" style={{ textDecoration: 'none', borderRadius: "10px" }}>
-                  <div className="card" style={{ borderRadius: "10px" }}>
-                    <div className="like" style={{ position: "absolute", top: "10px", right: "10px", zIndex: 1 }}>
-                      <Heart
-                        id={card._id}
-                        isFavourite={card.isFavourite}
-                        onToggle={(event) => handleHeartClick(event, card._id)} 
-                      />
-                    </div>
+                <div className="card" style={{ borderRadius: "10px" }}>
+                  <div className="like" style={{ position: "absolute", top: "10px", right: "10px", zIndex: 1 }}>
+                    <Heart
+                      id={card._id}
+                      isFavourite={card.isFavourite}
+                      onToggle={(event) => handleHeartClick(event, card._id)} 
+                    />
+                  </div>
+                  <Link to={`/properties/${card._id}`} style={{ textDecoration: 'none' }}>
                     <img src={card.image} className="card-img-top w-100" alt={card.title} />
                     <div className="card-body d-flex flex-column">
                       <h5 className="price">
@@ -108,8 +108,8 @@ export default function Properties() {
                         {card.address}, {card.city}, {card.country}
                       </span>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               </div>
             ))
           ) : (
