@@ -6,7 +6,8 @@ import {
 	getAllBookings,
 	toFav,
 	getAllFavorites,
-} from "../controllers/userController.js";
+	removeFav,
+} from "../controller/userController.js";
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.post("/allBookings", getAllBookings);
 router.delete("/removeBooking/:id", cancelBooking);
 router.post("/toFav/:rid", toFav);
 router.post("/allFav", getAllFavorites); 
+router.delete("/removeFav/:rid", removeFav); 
 
 export default router;
