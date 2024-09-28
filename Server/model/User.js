@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -24,10 +23,36 @@ const userSchema = new mongoose.Schema({
             type: Date,
             required: true,
         },
+        title: {
+            type: String,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+        image: {
+            type: String,
+            required: true,
+        }
     }],
-    favResidenciesID: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Residency',
+    favResidencies: [{
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Residency',
+        },
+        title: {
+            type: String,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+        image: {
+            type: String,
+            required: true,
+        }
     }],
 }, {
     timestamps: true,
