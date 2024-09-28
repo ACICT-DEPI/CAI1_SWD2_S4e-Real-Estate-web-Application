@@ -30,7 +30,7 @@ const Heart = ({ id, isFavourite: initialIsFavourite, onToggle }) => {
       }
     } catch (error) {
       console.error('Error updating favorite status:', error);
-      toast.error('Failed to update favorite status.');
+
     }
   };
 
