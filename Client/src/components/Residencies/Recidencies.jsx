@@ -57,7 +57,7 @@ export default function Recidencies() {
                                             onToggle={() => handleToggleFavorite(card._id)}
                                         />
                                     </div>
-                                    <Link to={`/properties/${card._id}`}>
+                                  
                                         <img
                                             src={card.image}
                                             className="card-img-top w-100"
@@ -73,7 +73,7 @@ export default function Recidencies() {
                                                 {card.address} {card.city} {card.country}
                                             </span>
                                         </div>
-                                    </Link>
+                                 
                                 </div>
                             </div>
                         ))}
