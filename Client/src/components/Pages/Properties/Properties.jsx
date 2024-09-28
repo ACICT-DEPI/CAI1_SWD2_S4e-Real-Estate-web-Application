@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import SearchBar from '../../SearchBar/SearchBar';
-import { getAllProperties } from '../../../api/Properties';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import SearchBar from "../../SearchBar/SearchBar";
+import { getAllProperties } from "../../../api/Properties";
+import Heart from "../../Heart/Heart";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Properties.css";
 
 export default function Properties() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const fetchProperties = async () => {
     try {
@@ -27,6 +32,23 @@ export default function Properties() {
     fetchProperties();
   }, []);
 
+  const handleToggleFavorite = (id) => {
+    setFilteredData((prevData) =>
+      prevData.map((property) => {
+        if (property._id === id) {
+          const newFavoriteState = !property.isFavourite;
+          if (newFavoriteState) {
+            toast.success("Added to favorites!");
+          } else {
+            toast.info("Removed from favorites");
+          }
+          return { ...property, isFavourite: newFavoriteState };
+        }
+        return property;
+      })
+    );
+  };
+
   const handleSearch = (query) => {
     if (!query) {
       setFilteredData(data);
@@ -42,6 +64,11 @@ export default function Properties() {
     }
   };
 
+  const handleHeartClick = (event, id) => {
+    event.stopPropagation(); 
+    handleToggleFavorite(id);
+  };
+
   if (loading) {
     return <div>Loading properties...</div>;
   }
@@ -52,7 +79,7 @@ export default function Properties() {
 
   return (
     <div className="container">
-      <div className="properties-container p-5 m-5">
+      <div className="search-container p-3">
         <SearchBar onSearch={handleSearch} />
       </div>
 
@@ -63,25 +90,36 @@ export default function Properties() {
               <div className="col-md-3 mb-4 d-flex align-items-stretch" key={index}>
                 <Link to={`/properties/${card._id}`} className="card" style={{ textDecoration: 'none', borderRadius: "10px" }}>
                   <div className="card" style={{ borderRadius: "10px" }}>
+                    <div className="like" style={{ position: "absolute", top: "10px", right: "10px", zIndex: 1 }}>
+                      <Heart
+                        id={card._id}
+                        isFavourite={card.isFavourite}
+                        onToggle={(event) => handleHeartClick(event, card._id)} 
+                      />
+                    </div>
                     <img src={card.image} className="card-img-top w-100" alt={card.title} />
                     <div className="card-body d-flex flex-column">
                       <h5 className="price">
-                        <span>$</span>{card.price}
+                        <span>$</span>
+                        {card.price}
                       </h5>
                       <span className="name">{card.title}</span>
-                      <span className="detail">{card.address} {card.city} {card.country}</span>
+                      <span className="detail">
+                        {card.address}, {card.city}, {card.country}
+                      </span>
                     </div>
                   </div>
                 </Link>
               </div>
             ))
           ) : (
-            <div className='text-center' style={{ fontWeight: "bolder", fontSize: "20px", color: "rgb(50, 50, 63)" }}>
+            <div className="text-center" style={{ fontWeight: "bolder", fontSize: "20px", color: "rgb(50, 50, 63)" }}>
               No properties found matching your search
             </div>
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
