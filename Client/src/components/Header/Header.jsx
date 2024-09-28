@@ -19,6 +19,19 @@ export default function Header() {
             <li className="nav-item">
               <NavLink className="nav-link" to="/add">Add Property</NavLink>
             </li>
+            
+						<NavLink to="/bookings">
+							<a className="nav-link" href="#">
+								Bookings
+							</a>
+						</NavLink>
+
+						<NavLink to="/Favourites">
+							<a className="nav-link" href="#">
+								Favourites
+							</a>
+						</NavLink>
+
             <li className="nav-item">
               <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }}>Log in</button>
             </li>
