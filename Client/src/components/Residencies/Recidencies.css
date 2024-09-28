@@ -49,6 +49,7 @@
     background: rgb(216, 216, 216);
     box-shadow: 0px 72px 49px -51px rgba(136, 160, 255, 0.21);
 }
+
 .like {
     display: flex;
     justify-content: center;
