@@ -20,16 +20,12 @@ export default function Header() {
               <NavLink className="nav-link" to="/add">Add Property</NavLink>
             </li>
             
-						<NavLink to="/bookings">
-							<a className="nav-link" href="#">
+						<NavLink to="/bookings" className="nav-link">
 								Bookings
-							</a>
 						</NavLink>
 
-						<NavLink to="/Favourites">
-							<a className="nav-link" href="#">
+						<NavLink className="nav-link" to="/Favourites">
 								Favourites
-							</a>
 						</NavLink>
 
             <li className="nav-item">
