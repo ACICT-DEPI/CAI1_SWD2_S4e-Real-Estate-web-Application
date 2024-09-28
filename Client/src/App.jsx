@@ -15,6 +15,7 @@ import Favorites from "./components/Pages/Favourites/Favourites";
 function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
+          <div className="app-container">
       <BrowserRouter>
         <Suspense fallback={<div>Loading.....</div>}>
           <Routes>
@@ -28,6 +29,7 @@ function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
+      </div>
       </MantineProvider>
   );
 }
