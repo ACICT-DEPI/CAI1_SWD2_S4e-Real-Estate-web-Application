@@ -1,12 +1,23 @@
 import React from 'react';
 import './Header.css';
 import { useNavigate, NavLink } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import { useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
 
 export default function Header() {
+  const { auth } = useAuth();
+  const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleLogin = () => {
     navigate('/login');
   }
+
+  const handleLogout = async () => {
+    setAuth({});
+    navigate('/login');
+  }
+
   return (
     <section className="h-wrapper">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -32,9 +43,18 @@ export default function Header() {
 								Favourites
 						</NavLink>
 
-            <li className="nav-item">
-              <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }} onClick={handleLogin}>Log in</button>
-            </li>
+            {auth? (
+                    <>
+                        <li className='nav-link'>Welcome!</li> {/* Display username */}
+                        <li className='nav-item'>
+                            <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }} onClick={handleLogout}>Logout</button>
+                        </li>
+                    </>
+                ) : (
+                  <li className="nav-item">
+                    <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }} onClick={handleLogin}>Log in</button>
+                  </li>
+                )}
           </ul>
         </div>
       </nav>
