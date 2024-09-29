@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { getAllBookings, cancelBooking } from "../../../api/Details";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
+import { useContext } from "react";
+import AuthContext from "../../../context/AuthProvider";
 
 function Bookings() {
+	const { setAuth } = useContext(AuthContext);
+
 	const [bookings, setBookings] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);

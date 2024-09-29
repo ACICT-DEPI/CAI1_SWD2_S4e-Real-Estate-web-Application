@@ -27,8 +27,8 @@ export default function Recidencies() {
     };
 
     return (
-        <section>
-            <div className="container m-auto my-5 d-flex justify-content-between flex-wrap">
+        <section className="bg-white">
+            <div className="bg-white container m-auto my-5 d-flex justify-content-between flex-wrap">
                 <div className="row">
                     <div className="head">
                         <span>Best Choices</span>

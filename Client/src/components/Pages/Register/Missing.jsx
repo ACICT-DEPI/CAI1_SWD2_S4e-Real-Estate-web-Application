@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
+// import './index.css'
 
-export const Missing = () => {
+const Missing = () => {
     return (
         <article style={{ padding: "100px" }}>
             <h1>Error 404</h1>
@@ -11,3 +12,5 @@ export const Missing = () => {
         </article>
     )
 }
+
+export default Missing;

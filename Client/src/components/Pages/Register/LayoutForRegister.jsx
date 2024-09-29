@@ -1,9 +1,12 @@
 import { Outlet } from "react-router-dom"
+import './index.css'
 
-export const Layout = () => {
+const LayoutForRegister = () => {
     return (
         <main className="App">
             <Outlet />
         </main>
     )
-}
+};
+
+export default LayoutForRegister;

@@ -10,6 +10,6 @@ export const AuthProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     );
-}
+};
 
 export default AuthContext;

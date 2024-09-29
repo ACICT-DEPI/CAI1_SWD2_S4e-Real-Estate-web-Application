@@ -14,8 +14,12 @@ import Map from "./Map";
 import Update from "./Update";
 import Booking from "./Booking/Booking";
 import Heart from "./Heart/Heart";
+import { useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 
 function Details() {
+    const { setAuth } = useContext(AuthContext);
+    
     const { pathname } = useLocation();
     const id = pathname.split("/").slice(-1)[0];
     const [properties, setProperties] = useState([]);

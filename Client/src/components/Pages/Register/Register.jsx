@@ -1,9 +1,10 @@
 import React from 'react'
 import { useRef, useState, useEffect } from 'react';
-import { faCheck, faTimes, FaInfoCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from '../../api/axios';
+import axios from '../../../api/axios';
 import { Link } from 'react-router-dom';
+import './index.css';
 
 // username should be 4-24 characters long and start with a letter (case-insensitive)
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -14,7 +15,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const REGISTER_URL = '/register';
 
 
-export const Register = () => {
+const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
     const [user, setUser] = useState('');
@@ -107,18 +108,18 @@ export const Register = () => {
   return (
     <>
     {success ? (
-        <section>
-            <h1>Account created successfully!</h1>
-            <p>
+        <section style={{maxWidth: '480px'}}>
+            <h1 style={{color:'white'}}>Account created successfully!</h1>
+            <p className='button'>
                 <Link to="/login">Log In</Link>
             </p>
         </section>
     ) : (
-    <section>
+    <section style={{maxWidth: '480px'}}>
         <p ref={errRef} className={errMessage? "errmessage" : "offscreen"}>{errMessage}</p>
-        <h1>Sign Up</h1>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="username">
+        <h1 style={{color:'white'}}>Sign Up</h1>
+        <form onSubmit={handleSubmit} className='form'>
+            <label htmlFor="username" style={{color:'white'}}>
                 Username:
                 <span className={validUser ? "valid" : "hide"}>
                     <FontAwesomeIcon icon={faCheck} />
@@ -135,7 +136,7 @@ export const Register = () => {
                 Letters, numbers, underscore and hyphen allowed.
             </p>
 
-            <label htmlFor="email">
+            <label htmlFor="email" style={{color:'white'}}>
                 Email:
                 <span className={validEmail ? "valid" : "hide"}>
                     <FontAwesomeIcon icon={faCheck} />
@@ -150,7 +151,7 @@ export const Register = () => {
                 Invalid email format.
             </p>
 
-            <label htmlFor="password">
+            <label htmlFor="password" style={{color:'white'}}>
                 Password:
                 <span className={validPass ? "valid" : "hide"}>
                     <FontAwesomeIcon icon={faCheck} />
@@ -167,7 +168,7 @@ export const Register = () => {
                 one lowercase letter, and one number.
             </p>
 
-            <label htmlFor="confirm_pass">
+            <label htmlFor="confirm_pass" style={{color:'white'}}>
                 Confirm Password:
                 <span className={validMatch && matchPass ? "valid" : "hide"}>
                     <FontAwesomeIcon icon={faCheck} />
@@ -181,11 +182,11 @@ export const Register = () => {
                 <FontAwesomeIcon icon={faInfoCircle} />
                 Passwords must match.
             </p>
-            <button disabled={!validUser || !validPass || !validMatch ? true : false}>
+            <button className='button' disabled={!validUser || !validPass || !validMatch ? true : false}>
                 Sign Up
             </button>
         </form>
-        <p>
+        <p style={{color:'white'}}>
             Already have an account? 
             <span className='line'> 
                 <Link to="/login"> Log In</Link>
@@ -196,3 +197,5 @@ export const Register = () => {
     </>
   )
 }
+
+export default Register;

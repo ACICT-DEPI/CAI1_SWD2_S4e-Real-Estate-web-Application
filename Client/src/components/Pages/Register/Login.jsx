@@ -1,12 +1,13 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from '../../api/axios';
+import axios from '../../../api/axios';
+import './index.css';
 
 const LOGIN_URL = '/auth';
 
-export const Login = () => {
+const Login = () => {
     const { setAuth } = useAuth();
 
     const navigate = useNavigate();
@@ -52,8 +53,8 @@ export const Login = () => {
             setAuth({ user, pass, roles, accessToken });
             setUser('');
             setPass('');
-            // navigate(from, { replace: true });
-            navigate('/home', { replace : true });
+            navigate(from, { replace: true });
+            // navigate('/home', { replace : true });
         } catch (err) {
             if(!err?.response) {
                 setErrMessage('No server response. Please try again later.');
@@ -69,17 +70,17 @@ export const Login = () => {
     }
 
     return (
-        <section>
+        <section style={{maxWidth: '480px'}}>
             <p ref={errRef} className={errMessage? "errmessage" : "offscreen"}>{errMessage}</p>
-            <h1>Log In</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
+            <h1 style={{color:'white'}}>Log In</h1>
+            <form onSubmit={handleSubmit} className='form'>
+                <label htmlFor="username" style={{color:'white'}}>Username:</label>
                 <input type="text" id="username" name="username"  value={user} ref={userRef} autoComplete="off" onChange={(e) => setUser(e.target.value)} />
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password" style={{color:'white'}}>Password:</label>
                 <input type="password" id="password" name="password" value={pass} onChange={(e) => setPass(e.target.value)} />
-                <button>Log In</button>
+                <button className='button'>Log In</button>
             </form>
-            <p>
+            <p style={{color:'white'}}>
                 Don't have an account?  
                 <span className='line'> 
                     <Link to="/register">Sign Up</Link>
@@ -88,3 +89,5 @@ export const Login = () => {
         </section>
     );
 }
+
+export default Login;

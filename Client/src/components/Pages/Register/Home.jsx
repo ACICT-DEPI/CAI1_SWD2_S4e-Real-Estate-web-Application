@@ -1,8 +1,8 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
+import AuthContext from "../../../context/AuthProvider";
 
-export const Home = () => {
+const Home = () => {
     const { setAuth } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -25,3 +25,5 @@ export const Home = () => {
         </section>
     )
 }
+
+export default Home;

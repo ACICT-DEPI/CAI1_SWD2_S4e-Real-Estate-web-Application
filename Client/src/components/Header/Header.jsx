@@ -1,8 +1,12 @@
 import React from 'react';
 import './Header.css';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 export default function Header() {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate('/login');
+  }
   return (
     <section className="h-wrapper">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -29,7 +33,7 @@ export default function Header() {
 						</NavLink>
 
             <li className="nav-item">
-              <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }}>Log in</button>
+              <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }} onClick={handleLogin}>Log in</button>
             </li>
           </ul>
         </div>

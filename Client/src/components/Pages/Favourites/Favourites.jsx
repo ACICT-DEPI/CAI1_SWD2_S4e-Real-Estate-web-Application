@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllFavorites, removeFavorite } from "../../../api/Details";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../../context/AuthProvider";
 
 export default function Favorites() {
+	const { setAuth } = useContext(AuthContext);
+	
 	const [favorites, setFavorites] = useState([]);
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
