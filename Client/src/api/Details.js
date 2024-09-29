@@ -42,19 +42,17 @@ export const registerUser = async (userData) => {
 };
 
 export const bookVisit = async (email, residencyId, date) => {
-	try {
-		const response = await axios.post(
-			`${API_URL}/users/bookVisit/${residencyId}`,
-			{
-				email,
-				date,
-			}
-		);
-		return response.data;
-	} catch (error) {
-		throw error.response.data.message || "Failed to book visit";
-	}
+    try {
+        const response = await axios.post(
+            `${API_URL}/users/bookVisit`,
+            { email, residencyId, date } 
+        );
+        return response.data;
+    } catch (error) {
+        throw error.response?.data?.message || "Failed to book visit";
+    }
 };
+
 
 export const getAllBookings = async (email) => {
 	try {
