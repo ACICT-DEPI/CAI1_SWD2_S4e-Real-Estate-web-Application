@@ -44,15 +44,14 @@ export const registerUser = async (userData) => {
 export const bookVisit = async (email, residencyId, date) => {
     try {
         const response = await axios.post(
-            `${API_URL}/users/bookVisit`,
-            { email, residencyId, date } 
+            `${API_URL}/users/bookVisit/${residencyId}`, 
+            { email, date } 
         );
         return response.data;
     } catch (error) {
         throw error.response?.data?.message || "Failed to book visit";
     }
 };
-
 
 export const getAllBookings = async (email) => {
 	try {
@@ -91,12 +90,12 @@ export const toggleFavorite = async (email, residencyId) => {
 };
 
 export const getAllFavorites = async (email) => {
-	try {
-		const response = await axios.post(`${API_URL}/users/allFav`, { email });
-		return response.data;
-	} catch (error) {
-		throw error.response.data.message || "Failed to retrieve favorites";
-	}
+  try {
+    const response = await axios.post(`${API_URL}/users/allFav`, { email });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Failed to retrieve favorites");
+  }
 };
 
 export const removeFavorite = async (email, residencyId) => {
