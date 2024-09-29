@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { bookVisit } from "../../api/Details";
 import { DatePicker } from "@mantine/dates";
 import { Modal, Button } from "@mantine/core";
+import AuthContext from "../../context/AuthProvider"; 
 
-const Booking = ({ propertyId, userEmail, onBookingSuccess, isBooked }) => {
+const Booking = ({ propertyId, onBookingSuccess, isBooked }) => {
+	const { auth } = useContext(AuthContext); 
 	const [opened, setOpened] = useState(false);
 	const [bookingDate, setBookingDate] = useState(null);
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
 
 	const handleBookVisit = async () => {
+		if (!auth?.email) {
+	
+			toast.error("You should login to book a visit.");
+			return;
+		}
+
 		if (!bookingDate) {
 			toast.error("Please select a date for your visit.");
 			return;
@@ -26,28 +34,36 @@ const Booking = ({ propertyId, userEmail, onBookingSuccess, isBooked }) => {
 			toast.error("You are already booked for this residency.");
 			return;
 		}
-
 		try {
-			console.log("Booking visit for:", { userEmail, propertyId, bookingDate });
-			await bookVisit(userEmail, propertyId, bookingDate);
-			toast.success("You have successfully booked your visit!"); 
-			console.log("Booking success"); 
+			console.log("Booking visit for:", {
+				email: auth.email,
+				propertyId,
+				bookingDate,
+			});
+			await bookVisit(auth.email, propertyId, bookingDate); 
+			toast.success("You have successfully booked your visit!");
+			console.log("Booking success");
 			onBookingSuccess(true);
 			setOpened(false);
 		} catch (error) {
+			console.error("Error while booking visit:", error); 
+
 			const errorMessage =
 				error.response?.data?.message || "Unknown error occurred.";
-			if (
-				error.response?.status === 409 &&
-				errorMessage.includes("already booked")
-			) {
-				toast.error("You are already booked for this residency.");
+
+			
+			if (error.response?.status === 400) {
+			
+				if (errorMessage.includes("Residency already booked")) {
+					toast.error("You are already booked for this residency.");
+				} else {
+					toast.error(errorMessage); 
+				}
 			} else {
-				toast.error(errorMessage);
+				toast.error("You are already booked for this residency.");
 			}
 		}
 	};
-
 	return (
 		<div>
 			<button
