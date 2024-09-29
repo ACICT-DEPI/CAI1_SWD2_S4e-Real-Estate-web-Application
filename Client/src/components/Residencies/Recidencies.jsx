@@ -5,13 +5,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Heart from "../Heart/Heart";
 import { Link } from "react-router-dom";
-
+import AuthContext from "../../context/AuthProvider";
 export default function Recidencies() {
+    const { auth } = useContext(AuthContext); 
     const [residencies, setResidencies] = useState(
         data.map((res) => ({ ...res, isFavourite: false }))
     );
 
-  const handleToggleFavorite = (id) => {
+    const handleToggleFavorite = (id) => {
         setResidencies((prevResidencies) =>
             prevResidencies.map((res) => {
                 if (res._id === id) {
@@ -48,7 +49,7 @@ export default function Recidencies() {
                                     }}
                                 >
                                     <div className="like" style={{ position: "absolute", top: "10px", right: "10px", zIndex: 1 }}>
-                                        <Heart
+                                         <Heart
                                             id={card._id}
                                             isFavourite={card.isFavourite}
                                             onToggle={handleToggleFavorite}
