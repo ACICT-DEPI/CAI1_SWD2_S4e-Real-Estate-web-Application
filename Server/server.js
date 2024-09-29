@@ -11,7 +11,7 @@ import authRoutes from './routes/auth.js';
 import refreshRoutes from './routes/refresh.js';
 import logoutRoutes from './routes/logout.js';
 import userRoutes from './routes/api/users.js';
-
+import userRoute from "./routes/userRoute.js";
 // import userRoutes from "./routes/userRoute.js";
 // import('dotenv').config();
 // const express = import('express');
@@ -90,6 +90,7 @@ app.use('/logout', logoutRoutes);
 // app.use(verifyJWT); // Verify JWT for protected routes
 app.use("/api", route);
 app.use('/users', userRoutes); // Use the imported routes
+app.use("/api/users", userRoute); 
 const __dirname = path.resolve();
 
 app.all('*', (req, res) => {
