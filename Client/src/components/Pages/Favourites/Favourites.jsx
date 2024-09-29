@@ -1,36 +1,39 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAllFavorites, removeFavorite } from "../../../api/Details";
-import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../context/AuthProvider";
 
+
 export default function Favorites() {
-	const { setAuth } = useContext(AuthContext);
-	
 	const [favorites, setFavorites] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const { auth } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchFavorites = async () => {
+			setLoading(true);
 			try {
-				const email = "marwaharonnn@gmail.com";
+				const email = auth?.email;
 				const data = await getAllFavorites(email);
 				setFavorites(data);
 			} catch (error) {
 				console.error("Error fetching favorites:", error);
 				setError("Failed to fetch favorites");
+			} finally {
+				setLoading(false);
 			}
 		};
 
 		fetchFavorites();
-	}, []);
+	}, [auth]);
 
 	const handleRemoveFavorite = async (id) => {
 		try {
-			const email = "marwaharonnn@gmail.com";
+			const email = auth?.email;
 			await removeFavorite(email, id);
 			setFavorites((prevFavorites) =>
 				prevFavorites.filter((fav) => fav.id !== id)
@@ -46,11 +49,12 @@ export default function Favorites() {
 		navigate(`/properties/${id}`);
 	};
 
+	if (loading) return <div className="text-center">Loading...</div>;
 	if (error) return <div className="text-red-600 text-center">{error}</div>;
 
 	return (
 		<div className="container mx-auto p-8">
-			<h2 className="text-2xl font-bold mb-6 text-center"><br /><br />Your Favorites</h2>
+			<h2 className="text-2xl font-bold mb-6 text-center">Your Favorites</h2>
 			{favorites.length === 0 ? (
 				<p className="text-center text-gray-500">No favorites available.</p>
 			) : (
