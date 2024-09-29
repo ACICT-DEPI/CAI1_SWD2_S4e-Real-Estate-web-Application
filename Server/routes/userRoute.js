@@ -1,4 +1,4 @@
-// import express from "express";
+
 import express from "express";
 import {
 	bookVisit,
@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 
-router.post("/bookVisit/:id", bookVisit);
+router.post("/bookVisit/:rid", bookVisit);
 router.post("/allBookings", getAllBookings);
 router.delete("/removeBooking/:id", cancelBooking);
 router.post("/toFav/:rid", toFav);
