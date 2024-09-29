@@ -16,6 +16,7 @@ import Booking from "./Booking/Booking";
 import Heart from "./Heart/Heart";
 import { useContext } from "react";
 import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 function Details() {
     const { setAuth } = useContext(AuthContext);
@@ -28,7 +29,7 @@ function Details() {
     const [selectedResidency, setSelectedResidency] = useState(null);
     const [isBooked, setIsBooked] = useState(false);
     const [isFavourite, setIsFavourite] = useState(false);
-
+    const { auth } = useAuth();
     const fetchProperties = async () => {
         setLoading(true);
         try {
@@ -51,7 +52,9 @@ function Details() {
             (property) => property._id === propertyId
         );
         if (residency) {
-            const userEmail = "mukhtarhamza294@gmail.com"; // test
+            const userEmail = auth.email;
+            console.log("User Email:", userEmail);
+            console.log("Residency User Email:", residency.userEmail);  
             if (userEmail === residency.userEmail) {
                 await deleteResidence(propertyId);
                 swal.fire("Success", "Residency Deleted", "success");
@@ -67,7 +70,9 @@ function Details() {
     };
 
     const handleUpdate = (property) => {
-        const userEmail = "julianageorgeeshak@gmail.com"; 
+        const userEmail = auth.email;
+        console.log("User Email:", userEmail);
+        console.log("Residency User Email:", property.userEmail);  
         if (userEmail === property.userEmail) {
             setSelectedResidency(property);
         } else {
