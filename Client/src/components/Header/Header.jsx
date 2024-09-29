@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Header.css';
 import { useNavigate, NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
+import LogoutConfirmationModal from './LogoutConfirmationModal';
 
 export default function Header() {
   const { auth } = useAuth();
@@ -17,8 +18,26 @@ export default function Header() {
     setAuth({});
     navigate('/');
   }
+
   console.log(auth);
   console.log(auth?.user);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log(isModalOpen);
+
+    const handleLogoutClick = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmLogout = () => {
+        handleLogout();
+        setIsModalOpen(false);
+    };
+
+    const handleCancelLogout = () => {
+        setIsModalOpen(false); 
+    };
 
   return (
     <section className="h-wrapper">
@@ -49,7 +68,7 @@ export default function Header() {
                     <>
                         <li className='nav-link'>Welcome!</li> {/* Display username */}
                         <li className='nav-item'>
-                            <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }} onClick={handleLogout}>Logout</button>
+                            <button className="btn text-white" style={{ width: '100px', backgroundColor: 'rgb(87, 87, 249)', marginLeft: '20px' }} onClick={handleLogoutClick}>Logout</button>
                         </li>
                     </>
                 ) : (
@@ -59,6 +78,12 @@ export default function Header() {
                 )}
           </ul>
         </div>
+        {isModalOpen && (
+                    <LogoutConfirmationModal
+                        onConfirm={handleConfirmLogout}
+                        onCancel={handleCancelLogout}
+                    />
+        )}
       </nav>
     </section>
   );
