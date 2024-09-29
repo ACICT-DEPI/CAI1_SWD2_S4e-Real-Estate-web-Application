@@ -24,43 +24,31 @@ const getUser = async (req, res) => {
     }
     res.json(user);
 }
-
 export const bookVisit = async (req, res) => {
-	const { email, date } = req.body;
-	const { id } = req.params;
+    const { email, residencyId, date } = req.body; 
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
 
-	try {
-		const user = await User.findOne({ email });
-		if (!user) {
-			return res.status(404).json({ message: "User not found" });
-		}
+        const residency = await Residency.findById(residencyId); 
+        if (!residency) {
+            return res.status(404).json({ message: "Residency not found" });
+        }
 
-		const alreadyBooked = user.bookedVisits.some(
-			(visit) => visit.id.toString() === id
-		);
-		if (alreadyBooked) {
-			return res
-				.status(400)
-				.json({ message: "This residency is already booked by you" });
-		}
+        const alreadyBooked = user.bookedResidencies.includes(residencyId);
+        if (alreadyBooked) {
+            return res.status(400).json({ message: "Residency already booked" });
+        }
 
-		const residency = await Residency.findById(id);
-		if (!residency) {
-			return res.status(404).json({ message: "Residency not found" });
-		}
+        user.bookedResidencies.push(residencyId);
+        await user.save();
 
-		user.bookedVisits.push({
-			id,
-			date,
-			title: residency.title,
-			price: residency.price,
-			image: residency.image,
-		});
-		await user.save();
-		res.send("Your visit is booked successfully");
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
+        res.status(200).json({ message: "Residency successfully booked" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const getAllBookings = async (req, res) => {
