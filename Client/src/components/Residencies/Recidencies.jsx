@@ -1,6 +1,6 @@
 import "./Recidencies.css";
 import data from "../../utils/slider.json";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Heart from "../Heart/Heart";
@@ -11,14 +11,11 @@ export default function Recidencies() {
         data.map((res) => ({ ...res, isFavourite: false }))
     );
 
-    const handleToggleFavorite = (id) => {
+  const handleToggleFavorite = (id) => {
         setResidencies((prevResidencies) =>
             prevResidencies.map((res) => {
                 if (res._id === id) {
                     const newFavoriteState = !res.isFavourite;
-                    if (newFavoriteState) {
-                        toast.success("Added to favorites!");
-                    }
                     return { ...res, isFavourite: newFavoriteState };
                 }
                 return res;
@@ -54,7 +51,9 @@ export default function Recidencies() {
                                         <Heart
                                             id={card._id}
                                             isFavourite={card.isFavourite}
-                                            onToggle={() => handleToggleFavorite(card._id)}
+                                            onToggle={handleToggleFavorite}
+                                            isAuthenticated={Boolean(auth?.accessToken)} 
+                                            email={auth?.email}  
                                         />
                                     </div>
                                     <Link to={`/properties/${card._id}`} style={{ textDecoration: 'none', borderRadius: "10px" }}>
