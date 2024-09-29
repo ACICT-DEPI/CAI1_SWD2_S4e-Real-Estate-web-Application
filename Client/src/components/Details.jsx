@@ -17,10 +17,11 @@ import Heart from "./Heart/Heart";
 import { useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 function Details() {
     const { setAuth } = useContext(AuthContext);
-    
+    const navigate = useNavigate(); 
     const { pathname } = useLocation();
     const id = pathname.split("/").slice(-1)[0];
     const [properties, setProperties] = useState([]);
@@ -55,10 +56,30 @@ function Details() {
             const userEmail = auth.email;
             console.log("User Email:", userEmail);
             console.log("Residency User Email:", residency.userEmail);  
+    
             if (userEmail === residency.userEmail) {
-                await deleteResidence(propertyId);
-                swal.fire("Success", "Residency Deleted", "success");
-                fetchProperties();
+                const result = await swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                });
+    
+                if (result.isConfirmed) {
+                    // Proceed with deletion
+                    try {
+                        await deleteResidence(propertyId);
+                        swal.fire('Deleted!', 'Residency has been deleted.', 'success');
+                        navigate('/properties');  
+                    } catch (error) {
+                        console.error("Error deleting residency:", error);
+                        swal.fire("Error", "Failed to delete residency", "error");
+                    }
+                }
             } else {
                 swal.fire(
                     "Error",
@@ -68,7 +89,7 @@ function Details() {
             }
         }
     };
-
+    
     const handleUpdate = (property) => {
         const userEmail = auth.email;
         console.log("User Email:", userEmail);
@@ -189,18 +210,22 @@ function Details() {
                                         onBookingSuccess={handleBookingState}
                                         isBooked={isBooked}
                                     />
-                                    <button
-                                        onClick={() => handleUpdate(property)}
-                                        className="rounded-lg border bg-red-900 p-2 text-white font-bold mt-4"
-                                    >
-                                        Update
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(property._id)}
-                                        className="rounded-lg border bg-red-900 p-2 text-white font-bold"
-                                    >
-                                        Delete
-                                    </button>
+                                {auth.email === property.userEmail && ( 
+            <>
+                <button
+                    onClick={() => handleUpdate(property)}
+                    className="rounded-lg border bg-red-900 p-2 text-white font-bold mt-4"
+                >
+                    Update
+                </button>
+                <button
+                    onClick={() => handleDelete(property._id)}
+                    className="rounded-lg border bg-red-900 p-2 text-white font-bold"
+                >
+                    Delete
+                </button>
+            </>
+        )}
                                 </div>
                             </div>
                             {property?.address && property?.city && property?.country ? (
