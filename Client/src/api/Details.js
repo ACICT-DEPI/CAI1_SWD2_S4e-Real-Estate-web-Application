@@ -81,10 +81,10 @@ export const cancelBooking = async (email, residencyId) => {
 	}
 };
 
-export const toggleFavorite = async (residencyId) => {
+export const toggleFavorite = async (email, residencyId) => {
 	try {
 		const response = await axios.post(`${API_URL}/users/toFav/${residencyId}`, {
-			email: "marwaharonnn@gmail.com",
+			email,
 		});
 		return response.data;
 	} catch (error) {
@@ -112,4 +112,3 @@ export const removeFavorite = async (email, residencyId) => {
 		throw error.response.data.message || "Failed to remove favorite";
 	}
 };
-
