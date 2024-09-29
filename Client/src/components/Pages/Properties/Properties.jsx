@@ -5,7 +5,7 @@ import { getAllProperties } from "../../../api/Properties";
 import Heart from "../../Heart/Heart";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import AuthContext from "../../../context/AuthProvider";
 
 export default function Properties() {
   const [data, setData] = useState([]);
@@ -13,6 +13,7 @@ export default function Properties() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+    const { auth } = useContext(AuthContext); 
 
   const fetchProperties = async () => {
     try {
@@ -32,23 +33,17 @@ export default function Properties() {
     fetchProperties();
   }, []);
 
+
   const handleToggleFavorite = (id) => {
-    setFilteredData((prevData) =>
-      prevData.map((property) => {
+    setFilteredData((prevFilteredData) =>
+      prevFilteredData.map((property) => {
         if (property._id === id) {
-          const newFavoriteState = !property.isFavourite;
-          if (newFavoriteState) {
-            toast.success("Added to favorites!");
-          } else {
-            toast.info("Removed from favorites");
-          }
-          return { ...property, isFavourite: newFavoriteState };
+          return { ...property, isFavourite: !property.isFavourite };
         }
         return property;
       })
     );
   };
-
   const handleSearch = (query) => {
     if (!query) {
       setFilteredData(data);
@@ -64,10 +59,12 @@ export default function Properties() {
     }
   };
 
+
   const handleHeartClick = (event, id) => {
     event.stopPropagation(); 
     handleToggleFavorite(id);
   };
+
 
   if (loading) {
     return <div>Loading properties...</div>;
@@ -90,10 +87,12 @@ export default function Properties() {
               <div className="col-md-3 mb-4 d-flex align-items-stretch" key={index}>
                 <div className="card" style={{ borderRadius: "10px" }}>
                   <div className="like" style={{ position: "absolute", top: "10px", right: "10px", zIndex: 1 }}>
-                    <Heart
+ <Heart
                       id={card._id}
                       isFavourite={card.isFavourite}
-                      onToggle={(event) => handleHeartClick(event, card._id)} 
+                      onToggle={handleHeartClick}
+                      isAuthenticated={Boolean(auth?.accessToken)} 
+                      email={auth?.email}  
                     />
                   </div>
                   <Link to={`/properties/${card._id}`} style={{ textDecoration: 'none' }}>
