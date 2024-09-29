@@ -54,7 +54,7 @@ export default function Favorites() {
 
 	return (
 		<div className="container mx-auto p-8">
-			<h2 className="text-2xl font-bold mb-6 text-center">Your Favorites</h2>
+			<h2 className="text-2xl font-bold m-8 text-center">Your Favorites</h2>
 			{favorites.length === 0 ? (
 				<p className="text-center text-gray-500">No favorites available.</p>
 			) : (
@@ -79,7 +79,8 @@ export default function Favorites() {
 									e.stopPropagation();
 									handleRemoveFavorite(fav.id);
 								}}
-								className="mt-4 rounded-lg bg-red-600 p-2 text-white font-bold transition-colors hover:bg-red-700"
+								className="mt-4 rounded-lg bg-red-600 p-2 text-white font-bold transition-colors duration-200 ease-in-out hover:bg-red-700"
+
 							>
 								Remove
 							</button>
