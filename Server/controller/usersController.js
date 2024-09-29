@@ -24,29 +24,44 @@ const getUser = async (req, res) => {
     }
     res.json(user);
 }
+
 export const bookVisit = async (req, res) => {
-    const { email, residencyId, date } = req.body; 
+    const { email, date } = req.body; 
+    const residencyId = req.params.rid;
+
     try {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const residency = await Residency.findById(residencyId); 
+        const residency = await Residency.findById(residencyId);
         if (!residency) {
             return res.status(404).json({ message: "Residency not found" });
         }
 
-        const alreadyBooked = user.bookedResidencies.includes(residencyId);
+        const bookedVisits = user.bookedVisits || [];
+        const alreadyBooked = bookedVisits.some(visit => visit.id.toString() === residencyId); 
+
         if (alreadyBooked) {
             return res.status(400).json({ message: "Residency already booked" });
         }
 
-        user.bookedResidencies.push(residencyId);
+
+        bookedVisits.push({
+            id: residencyId,
+            date: date,
+            title: residency.title,
+            price: residency.price, 
+            image: residency.image 
+        });
+
+        user.bookedVisits = bookedVisits; 
         await user.save();
 
         res.status(200).json({ message: "Residency successfully booked" });
     } catch (error) {
+        console.error("Error booking visit:", error); 
         res.status(500).json({ message: error.message });
     }
 };
