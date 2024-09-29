@@ -15,8 +15,10 @@ export default function Header() {
 
   const handleLogout = async () => {
     setAuth({});
-    navigate('/login');
+    navigate('/');
   }
+  console.log(auth);
+  console.log(auth?.user);
 
   return (
     <section className="h-wrapper">
@@ -43,7 +45,7 @@ export default function Header() {
 								Favourites
 						</NavLink>
 
-            {auth? (
+            {auth?.user? (
                     <>
                         <li className='nav-link'>Welcome!</li> {/* Display username */}
                         <li className='nav-item'>
