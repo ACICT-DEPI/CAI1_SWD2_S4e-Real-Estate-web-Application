@@ -10,6 +10,9 @@ export default function Header() {
   const { auth } = useAuth();
   const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+
+
+
   const handleLogin = () => {
     navigate('/login');
   }

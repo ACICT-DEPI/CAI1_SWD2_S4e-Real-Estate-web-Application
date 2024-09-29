@@ -19,6 +19,7 @@ import Login from './components/Pages/Register/Login';
 import LayoutForRegister from './components/Pages/Register/LayoutForRegister';
 import RequireAuth from './components/Pages/Register/RequireAuth';
 import { AuthProvider } from './context/AuthProvider';
+import AddPropertyModal from './components/AddPropertyModal/AddPropertyModal';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
               <Route element={<RequireAuth />}>
                 <Route path="/bookings" element={<Bookings />} />
                 <Route path="/Favourites" element={<Favorites />} />
+                <Route path="/add" element={<AddPropertyModal />} />
               </Route>
             </Route>
             </Route>
