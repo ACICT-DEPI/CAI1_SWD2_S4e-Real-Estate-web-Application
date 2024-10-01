@@ -3,8 +3,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { toggleFavorite } from '../../api/Details';
 import { toast } from 'react-toastify';
 
-const Heart = ({ id, isFavourite: initialIsFavourite, onToggle, isAuthenticated, email }) => {
-  const [isFavourite, setIsFavourite] = useState(initialIsFavourite);
+const Heart = ({ id, isFavourite, onToggle, isAuthenticated, email }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleToggleFavorite = async (event) => {
@@ -17,17 +16,13 @@ const Heart = ({ id, isFavourite: initialIsFavourite, onToggle, isAuthenticated,
 
     try {
       const newFavoriteState = !isFavourite;
-      await toggleFavorite(email, id);  
-      setIsFavourite(newFavoriteState);
+      await toggleFavorite(email, id);
+      onToggle(id); 
 
       if (newFavoriteState) {
         toast.success('Added to favorites!');
       } else {
         toast.info('Removed from favorites!');
-      }
-
-      if (onToggle) {
-        onToggle(id); 
       }
     } catch (error) {
       console.error('Error updating favorite status:', error);
