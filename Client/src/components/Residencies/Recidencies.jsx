@@ -1,16 +1,44 @@
 import "./Recidencies.css";
 import data from "../../utils/slider.json";
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Heart from "../Heart/Heart";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
+import { getAllFavorites } from "../../api/Details";
+
 export default function Recidencies() {
-    const { auth } = useContext(AuthContext); 
-    const [residencies, setResidencies] = useState(
-        data.map((res) => ({ ...res, isFavourite: false }))
-    );
+    const { auth } = useContext(AuthContext);
+    const [residencies, setResidencies] = useState([]);
+
+    useEffect(() => {
+
+        const initialResidencies = data.map((res) => ({ ...res, isFavourite: false }));
+        setResidencies(initialResidencies);
+
+
+        if (auth?.email) {
+            const fetchFavorites = async () => {
+                try {
+                    const favoritesResponse = await getAllFavorites(auth.email);
+                    const favoriteIds = new Set(favoritesResponse.map(fav => fav.id.toString())); 
+
+                    const updatedResidencies = initialResidencies.map(res => ({
+                        ...res,
+                        isFavourite: favoriteIds.has(res._id), 
+                    }));
+
+                    setResidencies(updatedResidencies);
+                } catch (error) {
+                    console.error("Error fetching favorites:", error);
+                }
+            };
+            fetchFavorites();
+        } else {
+            setResidencies(initialResidencies);
+        }
+    }, [auth]);
 
     const handleToggleFavorite = (id) => {
         setResidencies((prevResidencies) =>
@@ -45,16 +73,16 @@ export default function Recidencies() {
                                         textDecoration: "none",
                                         borderRadius: "10px",
                                         cursor: "pointer",
-                                        position: "relative", 
+                                        position: "relative",
                                     }}
                                 >
                                     <div className="like" style={{ position: "absolute", top: "10px", right: "10px", zIndex: 1 }}>
-                                         <Heart
+                                        <Heart
                                             id={card._id}
                                             isFavourite={card.isFavourite}
                                             onToggle={handleToggleFavorite}
-                                            isAuthenticated={Boolean(auth?.accessToken)} 
-                                            email={auth?.email}  
+                                            isAuthenticated={Boolean(auth?.accessToken)}
+                                            email={auth?.email}
                                         />
                                     </div>
                                     <Link to={`/properties/${card._id}`} style={{ textDecoration: 'none', borderRadius: "10px" }}>
