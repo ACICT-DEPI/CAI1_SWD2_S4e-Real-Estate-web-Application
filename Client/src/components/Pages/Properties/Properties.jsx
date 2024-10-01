@@ -19,18 +19,18 @@ export default function Properties() {
     try {
       const response = await getAllProperties();
       const propertiesWithFavorites = response.map(property => ({ ...property, isFavourite: false }));
-
+  
       if (auth?.email) {
         const favoritesResponse = await getAllFavorites(auth.email);
-        const favoriteIds = new Set(favoritesResponse.map(fav => fav._id));
-
+        const favoriteIds = new Set(favoritesResponse.map(fav => fav.id.toString())); 
+  
         propertiesWithFavorites.forEach(property => {
-          property.isFavourite = favoriteIds.has(property._id);
+          property.isFavourite = favoriteIds.has(property._id); 
         });
       }
-
+  
       setData(propertiesWithFavorites);
-      setFilteredData(propertiesWithFavorites);
+      setFilteredData(propertiesWithFavorites); 
     } catch (error) {
       console.error('Error fetching properties:', error);
       setError('Failed to load properties. Please try again later.');
@@ -38,11 +38,9 @@ export default function Properties() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchProperties();
   }, []); 
-
   const handleToggleFavorite = (id) => {
     setFilteredData((prevFilteredData) =>
       prevFilteredData.map((property) => {
@@ -53,7 +51,6 @@ export default function Properties() {
       })
     );
   };
-
   const handleSearch = (query) => {
     if (!query) {
       setFilteredData(data);
