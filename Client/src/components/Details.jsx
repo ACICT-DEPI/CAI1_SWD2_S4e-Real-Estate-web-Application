@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { getDetails, deleteResidence } from "../api/Details";
+import { getDetails, deleteResidence, getAllFavorites } from "../api/Details";
 import { useLocation } from "react-router-dom";
 import swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,9 +43,33 @@ function Details() {
 		}
 	};
 
-	useEffect(() => {
-		fetchProperties();
-	}, [id]);
+
+	const fetchFavorites = async () => {
+        if (auth?.email) {
+            try {
+                const favoritesResponse = await getAllFavorites(auth.email);
+                return new Set(favoritesResponse.map(fav => fav.id.toString())); 
+            } catch (err) {
+                console.error("Error fetching favorites:", err);
+                return new Set(); 
+            }
+        }
+        return new Set();
+    };
+
+    useEffect(() => {
+        const loadData = async () => {
+            await fetchProperties();
+            const favoriteIds = await fetchFavorites();
+            setProperties((prevProperties) =>
+                prevProperties.map(property => ({
+                    ...property,
+                    isFavourite: favoriteIds.has(property._id), 
+                }))
+            );
+        };
+        loadData();
+    }, [id, auth]);
 
 	const handleDelete = async (propertyId) => {
 		const residency = properties.find(
@@ -69,7 +93,7 @@ function Details() {
 				});
 
 				if (result.isConfirmed) {
-					// Proceed with deletion
+		
 					try {
 						await deleteResidence(propertyId);
 						swal.fire("Deleted!", "Residency has been deleted.", "success");
@@ -108,16 +132,18 @@ function Details() {
 		setIsBooked(booked);
 	};
 
-	const handleToggleFavorite = (id) => {
-		setProperties((prevFilteredData) =>
-			prevFilteredData.map((property) => {
-				if (property._id === id) {
-					return { ...property, isFavourite: !property.isFavourite };
-				}
-				return property;
-			})
-		);
-	};
+    const handleToggleFavorite = async (id) => {
+        setProperties((prevProperties) =>
+            prevProperties.map((property) => {
+                if (property._id === id) {
+                    return { ...property, isFavourite: !property.isFavourite };
+                }
+                return property;
+            })
+        );
+    
+    };
+
 	const handleHeartClick = (id) => {
 		handleToggleFavorite(id);
 	};
