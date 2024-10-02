@@ -233,11 +233,11 @@ function Details() {
 									</p>
 									<Booking
 										propertyId={property._id}
-										userEmail={auth.email}
+										userEmail={auth?.email}
 										onBookingSuccess={handleBookingState}
 										isBooked={isBooked}
 									/>{" "}
-									{auth.email === property.userEmail && (
+									{auth?.email === property.userEmail && (
 										<>
 											<button
 												onClick={() => handleUpdate(property)}

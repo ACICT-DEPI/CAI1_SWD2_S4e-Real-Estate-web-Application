@@ -59,7 +59,7 @@ function Bookings() {
 
     return (
         <div className="container mx-auto p-8">
-            <h2 className="text-2xl font-bold m-7 text-center">Your Bookings</h2>
+            <h2 className="text-2xl font-bold m-7 text-center"><br />Your Bookings</h2>
             {bookings.length === 0 ? (
                 <p className="text-center text-gray-500">No bookings available.</p>
             ) : (

@@ -54,7 +54,7 @@ export default function Favorites() {
 
 	return (
 		<div className="container mx-auto p-8">
-			<h2 className="text-2xl font-bold m-8 text-center">Your Favorites</h2>
+			<h2 className="text-2xl font-bold m-8 text-center"><br />Your Favorites</h2>
 			{favorites.length === 0 ? (
 				<p className="text-center text-gray-500">No favorites available.</p>
 			) : (

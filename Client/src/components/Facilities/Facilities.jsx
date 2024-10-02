@@ -1,17 +1,13 @@
-// import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, Group, NumberInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useContext } from "react";
-// import UserDetailContext from "../../context/UserDetailContext";
-// import useProperties from "../../hooks/useProperties.jsx";
-// import { useMutation } from "react-query";
-import { toast } from "react-toastify";
-// import { createResidency } from "../../utils/api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useAuth from '../../hooks/useAuth';
 import AuthContext from "../../context/AuthProvider";
 import { useNavigate, NavLink } from 'react-router-dom';
 import axios from "../../api/axios";
-const ADD_URL = '/Residency';
+const ADD_URL = '/api/Residency';
 
 const Facilities = ({
   prevStep,
@@ -45,7 +41,7 @@ const Facilities = ({
       }));
       try{
         const response = await axios.post(ADD_URL,
-            JSON.stringify({ propertyDetails }),
+            JSON.stringify(propertyDetails),
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +50,6 @@ const Facilities = ({
             }
         );
         console.log(response.data);
-        toast.success("Added Successfully", {position: "bottom-right"});
         setPropertyDetails({
             title: "",
             description: "",
@@ -70,8 +65,10 @@ const Facilities = ({
             },
             userEmail: auth?.email,
         })
+        toast.success("Property added successfully");
         setOpened(false)
         setActiveStep(0)
+        navigate('/properties');
       }catch(e){
         console.log(e)
       }
