@@ -234,6 +234,7 @@ function Details() {
 									<Booking
 										propertyId={property._id}
 										userEmail={auth?.email}
+										propertyUserEmail={property.userEmail} 
 										onBookingSuccess={handleBookingState}
 										isBooked={isBooked}
 									/>{" "}
