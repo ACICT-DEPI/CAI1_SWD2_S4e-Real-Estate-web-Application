@@ -5,7 +5,7 @@ import { DatePicker } from "@mantine/dates";
 import { Modal, Button } from "@mantine/core";
 import AuthContext from "../../context/AuthProvider"; 
 
-const Booking = ({ propertyId, onBookingSuccess, isBooked }) => {
+const Booking = ({ propertyId, propertyUserEmail, onBookingSuccess, isBooked }) => {
 	const { auth } = useContext(AuthContext); 
 	const [opened, setOpened] = useState(false);
 	const [bookingDate, setBookingDate] = useState(null);
@@ -39,8 +39,9 @@ const Booking = ({ propertyId, onBookingSuccess, isBooked }) => {
 				email: auth.email,
 				propertyId,
 				bookingDate,
+				propertyUserEmail,
 			});
-			await bookVisit(auth.email, propertyId, bookingDate); 
+			await bookVisit(auth.email, propertyId,bookingDate); 
 			toast.success("You have successfully booked your visit!");
 			console.log("Booking success");
 			onBookingSuccess(true);
@@ -66,12 +67,13 @@ const Booking = ({ propertyId, onBookingSuccess, isBooked }) => {
 	};
 	return (
 		<div>
+			{auth?.email !== propertyUserEmail && (
 			<button
 				onClick={() => setOpened(true)}
 				className="rounded-lg border bg-blue-950 p-2 text-white font-bold w-full mt-7 transition duration-300 ease-in-out transform hover:scale-105"
 			>
 				Book your Visit
-			</button>
+			</button>)}
 
 			<Modal
 				opened={opened}
